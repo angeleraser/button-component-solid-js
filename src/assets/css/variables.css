@@ -1,0 +1,33 @@
+:root {
+  --default: #e0e0e0;
+  --default-hover: #aeaeae;
+  --default-shadow: #aeaeae3b;
+
+  --primary: #2962ff;
+  --primary-hover: #0039cb;
+  --o-primary-hover: #3d5afe3f;
+
+  --secondary: #455a64;
+  --secondary-hover: #1c313a;
+  --o-secondary-hover: #1c313a48;
+
+  --danger: #d32f2f;
+  --danger-hover: #9a0007;
+  --o-danger-hover: #9a00084b;
+
+  --dark: #3f3f3f;
+  --gray: #9e9e9e;
+  --white: #ffffff;
+
+  --fs: 14px;
+  --fw: 500;
+
+  --pa-sm: 6px 12px;
+  --pa-md: 8px 16px;
+  --pa-lg: 11px 22px;
+  --border-radius: 8px;
+
+  --box-shadow: 0 2px 3px 0 rgba(51, 51, 51, 0.2);
+
+  --ff: "Noto Sans", sans-serif;
+}
