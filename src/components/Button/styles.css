@@ -1,14 +1,37 @@
 .button {
+  display: inline-flex;
+  align-items: center;
   background-color: transparent;
-  font-family: var(--ff);
   outline: none;
   border: none;
+  border-radius: var(--border-radius);
+  transition: background-color 0.3s;
+  min-height: 42px;
+  min-width: 62px;
+}
+
+.button__text {
   font-size: var(--fs);
   font-weight: var(--fw);
-  border-radius: var(--border-radius);
-  line-height: 1.5;
-  transition: background-color 0.3s;
+  font-family: var(--ff);
   letter-spacing: 0.1px;
+  line-height: 1;
+}
+
+.button__icon {
+  display: inline-flex;
+}
+
+.button__icon--start {
+  margin-right: 6px;
+}
+
+.button__icon--end {
+  margin-left: 6px;
+}
+
+.button__icon .material-icons {
+  font-size: 18px;
 }
 
 /* Sizes */
@@ -68,6 +91,55 @@
   background-color: var(--o-primary-hover);
 }
 
+.button--secondary {
+  color: var(--white);
+  background-color: var(--secondary);
+  box-shadow: 0 2px 3px 0 var(--o-secondary-hover);
+}
+
+.button--secondary:hover {
+  background-color: var(--secondary-hover);
+}
+
+.button--outline.button--secondary,
+.button--text.button--secondary {
+  color: var(--secondary);
+}
+
+.button--outline.button--secondary {
+  border: 2px solid var(--secondary);
+}
+
+.button--outline.button--secondary:hover,
+.button--text.button--secondary:hover {
+  background-color: var(--o-secondary-hover);
+}
+
+.button--danger {
+  color: var(--white);
+  background-color: var(--danger);
+  box-shadow: 0 2px 3px 0 var(--o-danger-hover);
+}
+
+.button--danger:hover {
+  background-color: var(--danger-hover);
+}
+
+.button--outline.button--danger,
+.button--text.button--danger {
+  color: var(--danger);
+}
+
+.button--outline.button--danger {
+  border: 2px solid var(--danger);
+  color: var(--danger);
+}
+
+.button--outline.button--danger:hover,
+.button--text.button--danger:hover {
+  background-color: var(--o-danger-hover);
+}
+
 /* Generals */
 .button--disable-shadow {
   box-shadow: none;
@@ -81,4 +153,13 @@
 
 .button--text {
   border: none;
+}
+
+.button--disabled {
+  background-color: var(--default) !important;
+  color: var(--gray) !important;
+  opacity: 0.8;
+  cursor: not-allowed;
+  box-shadow: none !important;
+  border: none !important;
 }
