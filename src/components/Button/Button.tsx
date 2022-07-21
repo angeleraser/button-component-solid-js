@@ -1,4 +1,4 @@
-import type { Component, JSXElement } from "solid-js";
+import { Component, JSXElement, onMount } from "solid-js";
 import "./styles.css";
 
 type ButtonProps = {
@@ -11,6 +11,7 @@ type ButtonProps = {
   variant?: "outline" | "text";
   label?: string;
   children?: JSXElement;
+  onClick?: CallableFunction;
 };
 
 const getButtonClass = (suffix: string | undefined) => {
@@ -25,6 +26,40 @@ const _default: ButtonProps = {
   size: "md",
   startIcon: undefined,
   variant: undefined,
+};
+
+const createRippleCircle = (
+  xPos: number,
+  yPos: number,
+  size: number
+): HTMLElement => {
+  const spanEl: HTMLSpanElement = document.createElement("span");
+  spanEl.classList.add("ripple");
+  spanEl.style.top = `${yPos}px`;
+  spanEl.style.left = `${xPos}px`;
+  spanEl.style.width = `${size}px`;
+  spanEl.style.height = `${size}px`;
+  return spanEl;
+};
+
+const rippleEffect = (containerEl: HTMLSpanElement, event: MouseEvent) => {
+  const xPos = event.offsetX;
+  const yPos = event.offsetY;
+
+  const {
+    width,
+    height,
+  }: {
+    width: number;
+    height: number;
+  } = containerEl.getBoundingClientRect();
+
+  const ripple = createRippleCircle(xPos, yPos, Math.max(width, height));
+
+  containerEl.appendChild(ripple);
+  setTimeout(() => {
+    containerEl.removeChild(ripple);
+  }, 1000);
 };
 
 export const Button: Component<ButtonProps> = (props) => {
@@ -44,19 +79,35 @@ export const Button: Component<ButtonProps> = (props) => {
     [getButtonClass(variant)]: !!variant,
   };
 
+  let btnRippleAreaRef: undefined | HTMLSpanElement;
+
+  const handleClick = (
+    event: MouseEvent & {
+      currentTarget: HTMLButtonElement;
+      target: Element;
+    }
+  ) => {
+    if (btnRippleAreaRef && !disabled) rippleEffect(btnRippleAreaRef, event);
+    if (props.onClick) props.onClick();
+  };
+
   return (
-    <button classList={classList} class="button">
+    <button onClick={handleClick} classList={classList} class="button">
       {props.startIcon ? (
         <span class="button__icon--start button__icon">
           <span class="material-icons">{props.startIcon}</span>
         </span>
       ) : null}
+
       <span class="button__text">{props.label || props.children}</span>
+
       {props.endIcon ? (
         <span class="button__icon--end button__icon">
           <span class="material-icons">{props.endIcon}</span>
         </span>
       ) : null}
+
+      <span ref={btnRippleAreaRef} class="button-ripple-area"></span>
     </button>
   );
 };
