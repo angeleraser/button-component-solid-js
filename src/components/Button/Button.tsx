@@ -70,8 +70,8 @@ export const Button: Component<ButtonProps> = (props) => {
     size = _default.size,
     disableShadow = _default.disableShadow,
     variant = _default.variant,
-    disabled = props.disabled,
-    ripple = props.ripple,
+    disabled = _default.disabled,
+    ripple = _default.ripple,
   } = props;
 
   const classList = {
