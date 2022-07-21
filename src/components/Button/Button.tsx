@@ -1,4 +1,4 @@
-import { Component, JSXElement, onMount } from "solid-js";
+import { Component, JSXElement } from "solid-js";
 import "./styles.css";
 
 type ButtonProps = {
@@ -12,6 +12,7 @@ type ButtonProps = {
   label?: string;
   children?: JSXElement;
   onClick?: CallableFunction;
+  ripple?: boolean;
 };
 
 const getButtonClass = (suffix: string | undefined) => {
@@ -26,6 +27,7 @@ const _default: ButtonProps = {
   size: "md",
   startIcon: undefined,
   variant: undefined,
+  ripple: true,
 };
 
 const createRippleCircle = (
@@ -69,6 +71,7 @@ export const Button: Component<ButtonProps> = (props) => {
     disableShadow = _default.disableShadow,
     variant = _default.variant,
     disabled = props.disabled,
+    ripple = props.ripple,
   } = props;
 
   const classList = {
@@ -87,22 +90,33 @@ export const Button: Component<ButtonProps> = (props) => {
       target: Element;
     }
   ) => {
-    if (btnRippleAreaRef && !disabled) rippleEffect(btnRippleAreaRef, event);
+    if (btnRippleAreaRef && !disabled && ripple) {
+      rippleEffect(btnRippleAreaRef, event);
+    }
+
     if (props.onClick) props.onClick();
   };
 
   return (
     <button onClick={handleClick} classList={classList} class="button">
       {props.startIcon ? (
-        <span class="button__icon--start button__icon">
+        <span
+          aria-label="button left icon"
+          class="button__icon--start button__icon"
+        >
           <span class="material-icons">{props.startIcon}</span>
         </span>
       ) : null}
 
-      <span class="button__text">{props.label || props.children}</span>
+      <span aria-label="button text" class="button__text">
+        {props.label || props.children}
+      </span>
 
       {props.endIcon ? (
-        <span class="button__icon--end button__icon">
+        <span
+          aria-label="button right icon"
+          class="button__icon--end button__icon"
+        >
           <span class="material-icons">{props.endIcon}</span>
         </span>
       ) : null}
